@@ -1,3 +1,4 @@
+import "dotenv/config"
 import jwt from "jsonwebtoken";
 import { operators } from "../../data/data.js";
 

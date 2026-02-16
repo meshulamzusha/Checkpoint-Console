@@ -14,16 +14,16 @@ export const login = (req, res) => {
     const token = service.generateToken(operator);
 
     return res.status(200).json({
-      OK: true,
+      ok: true,
       code: 200,
       message: "You have successfully connected.",
       token: token,
-      operator: { id: operator.id, name: operator.name, role: operator.role },
+      operator: { id: operator.id, name: operator.username, role: operator.role },
     });
   }
 
   return res.status(401).json({
-    OK: false,
+    ok: false,
     code: 401,
     message: "This user is not registered",
   });

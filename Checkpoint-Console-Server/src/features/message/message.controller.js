@@ -11,16 +11,16 @@ const getAll = (req, res) => {
 };
 
 const create = (req, res) => {
-    const message = service.createMessage(req.body.text)
+  const message = service.createMessage(req.body.text);
 
-    return res.status(200).json({
-      ok: true,
-      code: 200,
-      message: message,
-    });
-}
+  return res.status(200).json({
+    ok: true,
+    code: 200,
+    message: message,
+  });
+};
 
 export default {
-    getAll,
-    create
-}
+  getAll,
+  create,
+};

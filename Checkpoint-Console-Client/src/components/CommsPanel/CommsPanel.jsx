@@ -1,12 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import SendMessage from "../SendMessage/SendMessage";
 
 const CommsPanel = () => {
   const [messages, setMessages] = useState([]);
-  const {token} = useContext(AuthContext)
+  const { token } = useContext(AuthContext);
+  
   useEffect(() => {
-    getMessages()
-  },[messages])
+    getMessages();
+  }, [messages]);
+
   const getMessages = async () => {
     try {
       const response = await fetch("http://localhost:3000/api/messages", {
@@ -23,6 +26,7 @@ const CommsPanel = () => {
       console.log(error);
     }
   };
+
   return (
     <div>
       <ol>
@@ -30,6 +34,7 @@ const CommsPanel = () => {
           <li key={m.id}>{m.content}</li>
         ))}
       </ol>
+      <SendMessage onSend={setMessages}/>
     </div>
   );
 };

@@ -1,32 +1,46 @@
-import React from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
-function LoginPanel() {
-  const handelSubmit = async (e) => {
+export function LoginPanel() {
+  const { setOperator, setToken } = useContext(AuthContext);
+
+  const login = async (credentials) => {
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+      });
+
+      const { token, operator } = await response.json();
+  
+      setOperator(operator);
+      setToken(token);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handelSubmit = (e) => {
     e.preventDefault();
 
     const form = e.target;
     const formData = new FormData(form);
+    const formJson = Object.fromEntries(formData.entries());
 
-    const response = await fetch("http://localhost:3000/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-    
-    const {token, operator} = await response.json()
+    login(formJson)
   };
 
   return (
     <div>
       <form onSubmit={handelSubmit}>
-        <label htmlFor="username"></label>
-        <input type="text" name="username" />
-        <label htmlFor="password"></label>
-        <input type="text" name="password" />
+        <label htmlFor="username">Username:</label>
+        <input type="text" name="username" id="username" />
+        <label htmlFor="password">Password:</label>
+        <input type="text" name="password" id="password" />
         <input type="submit" value={"Login"} />
       </form>
     </div>
   );
 }
-
-export default LoginPanel;

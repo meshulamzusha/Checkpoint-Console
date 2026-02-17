@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
-export function LoginPanel() {
+export function LoginPanel({onLogin}) {
   const { setOperator, setToken } = useContext(AuthContext);
 
   const login = async (credentials) => {
@@ -13,9 +13,10 @@ export function LoginPanel() {
       });
 
       const { token, operator } = await response.json();
-  
+
       setOperator(operator);
       setToken(token);
+      onLogin(true)
       
     } catch (error) {
       console.log(error);
